@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Media AI Bento Grid</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #f5f6fa;
+      font-family: 'Inter', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .bento-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1100px;
+      margin: 48px auto;
+      padding: 40px 32px;
+      background: linear-gradient(rgb(96, 94, 94) , rgb(140, 137, 137));
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(69, 69, 106, 0.08);
+    }
+    /* Grid Items */
+    .bento-main {
+      grid-column: 2 / span 2;
+      grid-row: 1 / span 1;
+      background: #6849e4;
+      color: #fff;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+      text-align: center;
+    }
+    .bento-main h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin: 0 0 12px 0;
+      letter-spacing: -1px;
+    }
+    .bento-main .highlight {
+      color: #ffcb6b;
+      font-weight: 700;
+    }
+    .stars {
+      margin: 12px 0 4px 0;
+    }
+    .stars img {
+      height: 24px;
+      vertical-align: middle;
+    }
+    .bento-main p {
+      font-size: 1rem;
+      margin: 0;
+      opacity: 0.9;
+    }
+    .bento-create {
+      grid-column: 1 / span 1;
+      grid-row: 1 / span 2;
+      background: #fbeee6;
+      border-radius: 12px;
+      padding: 32px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #181818;
+    }
+    .bento-create .quicker {
+      color: #7c5cff;
+      font-weight: 700;
+      font-style: italic;
+    }
+    .bento-create .create-btn {
+      margin-top: 32px;
+      background: #7c5cff;
+      color: #fff;
+      border: none;
+      border-radius: 24px;
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(124,92,255,0.08);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bento-create .create-btn span {
+      font-size: 1.2em;
+      margin-left: 6px;
+    }
+    .bento-schedule {
+      grid-column: 4 / span 1;
+      grid-row: 1 / span 2;
+      background: #e7e3fa;
+      border-radius: 12px;
+      padding: 28px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      color: #2d2d2d;
+    }
+    .bento-schedule h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0 0 18px 0;
+      color: #7c5cff;
+    }
+    .bento-schedule .chart {
+      background: #fff;
+      border-radius: 10px;
+      padding: 16px 12px 8px 12px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 8px rgba(124,92,255,0.04);
+    }
+    .bento-schedule .chart-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9em;
+      margin-bottom: 8px;
+      color: #7c5cff;
+      font-weight: 600;
+    }
+    .bento-schedule .bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      height: 60px;
+      margin-bottom: 8px;
+    }
+    .bento-schedule .bar {
+      width: 14px;
+      background: #7c5cff;
+      border-radius: 6px 6px 0 0;
+      opacity: 0.7;
+    }
+    .bento-schedule .bar.active {
+      height: 48px;
+      opacity: 1;
+      background: #7c5cff;
+    }
+    .bento-schedule .bar:not(.active) {
+      height: 18px;
+      background: #d2c6fa;
+    }
+    .bento-schedule .bar:nth-child(3) {
+      height: 38px;
+    }
+    .bento-schedule .bar:nth-child(4) {
+      height: 60px;
+      background: #7c5cff;
+      opacity: 1;
+    }
+    .bento-schedule .bar:nth-child(5) {
+      height: 28px;
+    }
+    .bento-schedule .bar:nth-child(6) {
+      height: 22px;
+    }
+    .bento-schedule .bar:nth-child(7) {
+      height: 12px;
+    }
+    .bento-schedule .bar.active-label {
+      background: #ffcb6b;
+    }
+    .bento-schedule .chart-caption {
+      font-size: 0.9em;
+      color: #555;
+      margin-top: 2px;
+    }
+    .bento-schedule .desc {
+      font-size: 0.95em;
+      color: #444;
+      margin-top: 10px;
+    }
+    .bento-write {
+      grid-column: 1 / span 1;
+      grid-row: 3 / span 1;
+      background: #ffcb6b;
+      border-radius: 12px;
+      padding: 24px 18px;
+      color: #181818;
+      font-size: 1.1rem;
+      font-weight: 600;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .bento-write .ai-box {
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-top: 18px;
+      font-size: 0.95em;
+      color: #444;
+      box-shadow: 0 2px 8px rgba(255,203,107,0.08);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bento-manage {
+      grid-column: 2 / span 1;
+      grid-row: 2 / span 1;
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px 18px;
+      color: #181818;
+      font-size: 1.1rem;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(124,92,255,0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      justify-content: center;
+    }
+    .bento-manage .profile-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95em;
+      color: #7c5cff;
+      font-weight: 500;
+    }
+    .bento-manage .profile-row img {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fbeee6;
+    }
+    .bento-manage .profile-row span {
+      font-size: 0.95em;
+      color: #181818;
+      font-weight: 500;
+    }
+    .bento-consistent {
+      grid-column: 3 / span 1;
+      grid-row: 2 / span 1;
+      background: #ffcb6b;
+      border-radius: 12px;
+      padding: 24px 18px;
+      color: #181818;
+      font-size: 1.1rem;
+      font-weight: 600;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .bento-consistent .calendar {
+      background: #fff;
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin-top: 16px;
+      font-size: 0.95em;
+      color: #7c5cff;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: space-between;
+    }
+    .bento-growth {
+      grid-column: 2 / span 1;
+      grid-row: 3 / span 1;
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px 18px;
+      color: #181818;
+      font-size: 1.1rem;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(124,92,255,0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      justify-content: center;
+    }
+    .bento-growth .growth-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .bento-growth .growth-row img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #e7e3fa;
+    }
+    .bento-growth .growth-row span {
+      font-size: 1.1em;
+      color: #7c5cff;
+      font-weight: 700;
+    }
+    .bento-growth .growth-row .label {
+      color: #181818;
+      font-size: 0.95em;
+      font-weight: 500;
+      margin-left: 4px;
+    }
+    .bento-followers {
+      grid-column: 3 / span 2;
+      grid-row: 3 / span 1;
+      background: #7c5cff;
+      color: #fff;
+      border-radius: 12px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      position: relative;
+    }
+    .bento-followers .followers-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 32px;
+      margin-top: 16px;
+    }
+    .bento-followers .followers-metric {
+      background: #fff;
+      color: #7c5cff;
+      border-radius: 10px;
+      padding: 10px 18px;
+      font-size: 1.1em;
+      font-weight: 700;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      box-shadow: 0 2px 8px rgba(255,203,107,0.08);
+    }
+    .bento-followers .followers-metric .label {
+      font-size: 0.85em;
+      color: #888;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+    .bento-followers .followers-metric .value {
+      font-size: 1.2em;
+      color: #7c5cff;
+      font-weight: 700;
+    }
+    .bento-followers .followers-metric .percent {
+      font-size: 0.9em;
+      color: #4caf50;
+      font-weight: 600;
+      margin-left: 6px;
+    }
+    @media (max-width: 900px) {
+      .bento-container {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(6, auto);
+        gap: 18px;
+        padding: 18px 6px;
+      }
+      .bento-main { grid-column: 1 / span 2; }
+      .bento-create { grid-row: 2 / span 1; }
+      .bento-schedule { grid-row: 2 / span 1; }
+      .bento-write { grid-row: 3 / span 1; }
+      .bento-manage { grid-row: 4 / span 1; }
+      .bento-consistent { grid-row: 5 / span 1; }
+      .bento-growth { grid-row: 6 / span 1; }
+      .bento-followers { grid-row: 7 / span 1; grid-column: 1 / span 2; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bento-container">
+    <!-- Main Center -->
+    <div class="bento-main">
+      <h1>Social Media <span class="highlight">10x Faster</span> with AI</h1>
+      <div class="stars">
+        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/2b50.png" alt="star" width="24" height="24">
+        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/2b50.png" alt="star" width="24" height="24">
+        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/2b50.png" alt="star" width="24" height="24">
+        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/2b50.png" alt="star" width="24" height="24">
+        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/2b50.png" alt="star" width="24" height="24">
+      </div>
+      <p>Over 4,000 5-star reviews</p>
+    </div>
+    <!-- Create and schedule -->
+    <div class="bento-create">
+      <div>
+        Create and schedule content <span class="quicker">quicker.</span>
+      </div>
+      <button class="create-btn">
+        Create Post <span>&rarr;</span>
+      </button>
+    </div>
+    <!-- Schedule to social media -->
+    <div class="bento-schedule">
+      <h2>Schedule to social media.</h2>
+      <div class="chart">
+        <div class="chart-labels">
+          <span>Mon</span>
+          <span>Tue</span>
+          <span>Wed</span>
+          <span>Thu</span>
+        </div>
+        <div class="bars">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar active"></div>
+        </div>
+        <div class="chart-caption">Most Active</div>
+      </div>
+      <div class="desc">
+        Optimize post timings to publish content at the perfect time for your audience.
+      </div>
+    </div>
+    <!-- Write your content using AI -->
+    <div class="bento-write">
+      Write your content using AI.
+      <div class="ai-box">
+        <span style="font-size:1.2em;">💬</span>
+        <div>
+          <div>Give me 5 tips to grow my follower on insta!</div>
+          <div style="margin-top:4px; color:#7c5cff; font-weight:600;">Certainly! Here are five tips to help you grow your Instagram...</div>
+        </div>
+      </div>
+    </div>
+    <!-- Manage multiple accounts -->
+    <div class="bento-manage">
+      <div class="profile-row">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="profile">
+        <span>@YourCo</span>
+        <span style="color:#888; font-size:0.95em;">12k Followers</span>
+      </div>
+      <div>Manage multiple accounts and platforms.</div>
+    </div>
+    <!-- Maintain a consistent posting schedule -->
+    <div class="bento-consistent">
+      Maintain a consistent posting schedule.
+      <div class="calendar">
+        <span>August 2024</span>
+        <span style="background:#7c5cff; color:#fff; border-radius:6px; padding:2px 8px; font-size:0.9em;">Week1</span>
+      </div>
+    </div>
+    <!-- Growth -->
+    <div class="bento-growth">
+      <div>&gt;56% faster audience growth</div>
+      <div class="growth-row">
+        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="avatar1">
+        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="avatar2">
+        <img src="https://randomuser.me/api/portraits/men/77.jpg" alt="avatar3">
+        <img src="https://randomuser.me/api/portraits/women/12.jpg" alt="avatar4">
+      </div>
+    </div>
+    <!-- Grow followers -->
+    <div class="bento-followers">
+      Grow followers with non-stop content.
+      <div class="followers-row">
+        <div class="followers-metric">
+          <span class="label">Follower Growth</span>
+          <span class="value">20,642 <span class="percent">+40%</span></span>
+        </div>
+        <div class="followers-metric">
+          <span class="label">Followers</span>
+          <span class="value">89,532 <span class="percent">+32%</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Extensions List UI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=DM+Sans:400,500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #eaf0fa;
+      font-family: 'DM Sans', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .modal-bg {
+      background: linear-gradient(135deg, #1a2236 0%, #232b47 100%);
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(30,40,90,0.18);
+      width: 900px;
+      max-width: 96vw;
+      margin: 60px auto;
+      padding: 32px 36px 28px 36px;
+      position: relative;
+      z-index: 2;
+    }
+    .header-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .header-bar .logo {
+      width: 32px;
+      height: 32px;
+      background: #f6f4f8;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #e94e77;
+    }
+    .header-bar .title {
+      font-size: 1.2em;
+      color: #fff;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+    .header-bar .settings {
+      margin-left: auto;
+      background: none;
+      border: none;
+      color: #bfc9e0;
+      font-size: 1.3em;
+      cursor: pointer;
+    }
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    .filter-bar .filter-btn {
+      background: #232b47;
+      color: #fff;
+      border: none;
+      border-radius: 18px;
+      padding: 6px 18px;
+      font-size: 1em;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: background 0.2s, opacity 0.2s;
+    }
+    .filter-bar .filter-btn.active {
+      background: #e94e77;
+      color: #fff;
+      opacity: 1;
+    }
+    .extensions-title {
+      color: #fff;
+      font-size: 1.5em;
+      font-weight: 500;
+      margin-bottom: 18px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+    .card {
+      background: #232b47;
+      border-radius: 14px;
+      padding: 22px 18px 18px 18px;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(30,40,90,0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      min-height: 140px;
+    }
+    .card .icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: #f6f4f8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3em;
+      color: #232b47;
+      margin-bottom: 8px;
+    }
+    .card .card-title {
+      font-size: 1.1em;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+    .card .desc {
+      font-size: 0.98em;
+      color: #bfc9e0;
+      margin-bottom: 14px;
+    }
+    .card .actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+    .remove-btn {
+      background: #2c3454;
+      color: #e94e77;
+      border: none;
+      border-radius: 8px;
+      padding: 5px 14px;
+      font-size: 0.95em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .remove-btn:hover {
+      background: #e94e77;
+      color: #fff;
+    }
+    .toggle-switch {
+      width: 36px;
+      height: 20px;
+      background: #1a2236;
+      border-radius: 12px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.2s;
+      border: 1.5px solid #2c3454;
+      display: inline-block;
+    }
+    .toggle-switch.active {
+      background: #e94e77;
+      border-color: #e94e77;
+    }
+    .toggle-switch .knob {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      background: #fff;
+      border-radius: 50%;
+      transition: left 0.2s;
+    }
+    .toggle-switch.active .knob {
+      left: 18px;
+      background: #fff;
+    }
+    @media (max-width: 900px) {
+      .modal-bg { width: 99vw; padding: 18px 4vw; }
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: 1fr; }
+      .modal-bg { padding: 8px 2vw; }
+    }
+  </style>
+</head>
+<body>
+  <div class="modal-bg">
+    <div class="header-bar">
+      <div class="logo">⦿</div>
+      <div class="title">Extensions</div>
+      <button class="settings" title="Settings">&#9881;</button>
+    </div>
+    <div class="filter-bar">
+      <button class="filter-btn active">All</button>
+      <button class="filter-btn">Active</button>
+      <button class="filter-btn">Inactive</button>
+    </div>
+    <div class="extensions-title">Extensions List</div>
+    <div class="grid">
+      <div class="card">
+        <div class="icon" style="background:#e3e6f8;">🔍</div>
+        <div class="card-title">DevLens</div>
+        <div class="desc">Quickly inspect page layouts and visualize element boundaries.</div>
+        <div class="actions">
+          <button class="remove-btn">Remove</button>
+          <div class="toggle-switch active"><div class="knob"></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="icon" style="background:#e3f2f8;">🕵️‍♂️</div>
+        <div class="card-title">StyleSpy</div>
+        <div class="desc">Instantly analyze and copy CSS from any webpage element.</div>
+        <div class="actions">
+          <button class="remove-btn">Remove</button>
+          <div class="toggle-switch"><div class="knob"></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="icon" style="background:#f8e3f6;">⚡</div>
+        <div class="card-title">SpeedBoost</div>
+        <div class="desc">Optimizes browser resource usage to accelerate page loading.</div>
+        <div class="actions">
+          <button class="remove-btn">Remove</button>
+          <div class="toggle-switch active"><div class="knob"></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="icon" style="background:#f8e3f6;">📄</div>
+        <div class="card-title">JSONWizard</div>
+        <div class="desc">Formats, validates, and prettifies JSON responses in-browser.</div>
+        <div class="actions">
+          <button class="remove-btn">Remove</button>
+          <div class="toggle-switch"><div class="knob"></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="icon" style="background:#e3e6f8;">📑</div>
+        <div class="card-title">TabMaster Pro</div>
+        <div class="desc">Organizes browser tabs into groups and sessions.</div>
+        <div class="actions">
+          <button class="remove-btn">Remove</button>
+          <div class="toggle-switch active"><div class="knob"></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="icon" style="background:#e3f2f8;">🖥️</div>
+        <div class="card-title">ViewportBuddy</div>
+        <div class="desc">Simulates various screen resolutions directly within the browser.</div>
+        <div class="actions">
+          <button class="remove-btn">Remove</button>
+          <div class="toggle-switch"><div class="knob"></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="icon" style="background:#e3e6f8;">📝</div>
+        <div class="card-title">Markup Notes</div>
+        <div class="desc">Enables annotation and notes directly onto webpages for collaborative debugging.</div>
+        <div class="actions">
+          <button class="remove-btn">Remove</button>
+          <div class="toggle-switch active"><div class="knob"></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="icon" style="background:#e3e6f8;">📐</div>
+        <div class="card-title">GridGuides</div>
+        <div class="desc">Overlay customizable grids and alignment guides on any webpage.</div>
+        <div class="actions">
+          <button class="remove-btn">Remove</button>
+          <div class="toggle-switch"><div class="knob"></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="icon" style="background:#e3f8f3;">🎨</div>
+        <div class="card-title">Palette Picker</div>
+        <div class="desc">Instantly extracts color palettes from any webpage.</div>
+        <div class="actions">
+          <button class="remove-btn">Remove</button>
+          <div class="toggle-switch active"><div class="knob"></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="icon" style="background:#f8f3e3;">🔗</div>
+        <div class="card-title">LinkChecker</div>
+        <div class="desc">Scans and highlights broken links on any page.</div>
+        <div class="actions">
+          <button class="remove-btn">Remove</button>
+          <div class="toggle-switch"><div class="knob"></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="icon" style="background:#e3e6f8;">📸</div>
+        <div class="card-title">DOM Snapshot</div>
+        <div class="desc">Capture and export DOM structures quickly.</div>
+        <div class="actions">
+          <button class="remove-btn">Remove</button>
+          <div class="toggle-switch"><div class="knob"></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="icon" style="background:#e3f8f3;">🖥️</div>
+        <div class="card-title">ConsolePlus</div>
+        <div class="desc">Enhanced developer console with advanced filtering and logging.</div>
+        <div class="actions">
+          <button class="remove-btn">Remove</button>
+          <div class="toggle-switch active"><div class="knob"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
